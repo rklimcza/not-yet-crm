@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Client, City, Contact
 
-# Register your models here.
+admin.site.register(Client)
+admin.site.register(City)
+admin.site.register(Contact)
