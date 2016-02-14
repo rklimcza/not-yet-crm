@@ -1,0 +1,10 @@
+.list-zad {
+ border-radius:0px !important;
+ border-left:none;
+ border-right:none;
+ border-bottom-color:white;
+}
+
+.list-group-item:first-child {
+	border-top-color:white;
+}
