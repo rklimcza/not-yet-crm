@@ -38,11 +38,14 @@
 	</div>
 	
 	<div class="col-md-10">
-	  <div class="btn-group" role="group" aria-label="..." style="padding-bottom:15px">
-        <a href = "{% url 'client_list' %}" type="button" class="btn btn-default active">Wszyscy</button>
+	  <div class="btn-group" role="group" style="padding-bottom:15px">
+        <a href = "{% url 'client_list' %}" type="button"
+        class="btn btn-default {% if city_now == 0 %}active {% endif %}">
+        Wszyscy</a>
         
         {% for city in cities %}
-        <a href="#" type="button" class="btn btn-default">{{ city.name }}</a>
+        <a href="{% url 'client_list' pk=city.id %}" type="button"
+        class="btn btn-default {% if city_now == city.id %}active {% endif %}">{{ city.name }}</a>
         {% endfor %}
         
       </div>
