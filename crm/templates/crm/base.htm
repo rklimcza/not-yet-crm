@@ -2,35 +2,35 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Not Yet CRM</title>
-  <meta charset="utf-8">
-  <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
-  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="static/js/bootstrap.min.js"></script>
-</head>
-<body>
+  <head>
+    <title>Not Yet CRM</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+  </head>
+  <body>
 
-<div class="container">
-    <div class="page-header row">
-        <div class="col-md-12 inline pull-left">
+    <div class="container">
+        <div class="page-header row">
+          <div class="col-md-12 inline pull-left">
             <h1>NYCRM <small>Baza danych klientów</small>
             <span class="pull-right h5">zalogowany jako: <strong>{{ user.username }}</strong>
             <a href="{% url 'django.contrib.auth.views.logout' %}">[wyloguj]</a></span></h1>
+          </div>
         </div>
-    </div>
-  
-  <div class="row" style="padding-bottom:15px">
-    <div class="col-md-12">
-      <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="/">Klienci</a></li>
-      </ul>
-	</div>
-  </div>
+      
+        <div class="row" style="padding-bottom:15px">
+          <div class="col-md-12">
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="active"><a href="/">Klienci</a></li>
+            </ul>
+          </div>
+        </div>
 
-  {% block content %}
-  {% endblock %}
-</div>
-</body>
+        {% block content %}
+        {% endblock %}
+      </div>
+  </body>
 </html>
