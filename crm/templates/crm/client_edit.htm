@@ -1,0 +1,23 @@
+{% extends 'crm/base.htm' %}
+  
+{% block content %}  
+  
+  <div class="row">
+    <div class="col-md-2" style="border-right:1px solid #DDD">
+	  <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="{% url 'client_details' pk=client.id %}">Przegląd</a></li>
+        <li role="presentation" class="active"><a href="#">Edytuj</a></li>
+		<li role="presentation"><a href="#">Dodaj kontakt</a></li>
+      </ul>
+	</div>
+	<div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">Zmiana profilu klienta</div>
+            <table class="table table-striped table-hover">
+                
+            </table>
+        </div>
+    </div>
+  </div>
+  
+{% endblock content %}

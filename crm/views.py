@@ -28,6 +28,16 @@ def client_details(request, pk):
 	return render(request, 'crm/client_details.htm', {'client': client,
 												      'contacts': contacts,
 													 })
+                                                     
+@login_required
+def client_edit(request, pk):
+	pk = int(pk)
+	client = get_object_or_404(Client, id=pk)
+	contacts = Contact.objects.filter(clients=pk).order_by('date')
+	
+	return render(request, 'crm/client_edit.htm', {'client': client,
+												      'contacts': contacts,
+													 })
 
 def login_view(request):
     next_page = request.GET.get('next', '/')
