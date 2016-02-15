@@ -1,0 +1,32 @@
+{% extends 'crm/base.htm' %}
+  
+{% block content %}  
+  
+  <div class="row">
+    <div class="col-md-2" style="border-right:1px solid #DDD">
+	  <ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="/">Rekrutacja</a></li>
+        <li role="presentation"><a href="#">Uczestnicy</a></li>
+		<li role="presentation" class="active"><a href="{% url 'client_new' %}">Dodaj</a></li>
+      </ul>
+	</div>
+	<div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">Dodaj nowego klienta</div>
+        <form method="POST">
+                {% csrf_token %}
+            <table class="table table-striped table-hover">
+                {{ form.as_table }}
+                <tr>
+                    <td> </td>
+                    <td>
+                        <button type="submit" class="save btn btn-default">Save</button>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+  </div>
+  
+{% endblock content %}

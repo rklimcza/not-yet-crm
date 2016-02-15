@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from crm.models import Client, City, Contact
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .forms import ClientForm
 
 @login_required
 def client_list(request, pk=0):
@@ -28,6 +29,19 @@ def client_details(request, pk):
 	return render(request, 'crm/client_details.htm', {'client': client,
 												      'contacts': contacts,
 													 })
+                                                     
+@login_required
+def client_new(request):
+    if request.method == "POST":
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            client = form.save(commit=False)
+            client.save()
+            return redirect('client_details', pk=client.pk)
+    else:
+        form = ClientForm()
+    return render(request, 'crm/client_new.htm', {'form': form})
+                                                     
                                                      
 @login_required
 def client_edit(request, pk):
