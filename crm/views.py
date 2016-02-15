@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from crm.models import Client, City, Contact
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -28,3 +28,18 @@ def client_details(request, pk):
 	return render(request, 'crm/client_details.htm', {'client': client,
 												      'contacts': contacts,
 													 })
+
+def login_view(request):
+    next_page = request.GET.get('next', '/')
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    
+    user = authenticate(username=username, password=password)
+    fail = False
+    if username is not None:
+        fail = True
+    if user is not None:
+        login(request, user)
+        return redirect(next_page)
+    else:
+        return render(request, 'crm/login_view.htm', {'login_failed':fail})

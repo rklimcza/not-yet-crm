@@ -8,4 +8,5 @@ urlpatterns = [
 		views.client_details, name='client_details'),
 	url(r'^logout/$', 'django.contrib.auth.views.logout',
                       {'next_page': '/'}),
+    url(r'^login/$', views.login_view, name='login_view'),
 ]
