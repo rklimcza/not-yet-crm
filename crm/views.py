@@ -37,7 +37,7 @@ def client_new(request):
         if form.is_valid():
             client = form.save(commit=False)
             client.save()
-            return redirect('client_details', pk=client.pk)
+            return redirect('client_details', pk=client.id)
     else:
         form = ClientForm()
     return render(request, 'crm/client_new.htm', {'form': form})
@@ -45,13 +45,16 @@ def client_new(request):
                                                      
 @login_required
 def client_edit(request, pk):
-	pk = int(pk)
-	client = get_object_or_404(Client, id=pk)
-	contacts = Contact.objects.filter(clients=pk).order_by('date')
-	
-	return render(request, 'crm/client_edit.htm', {'client': client,
-												      'contacts': contacts,
-													 })
+    client = get_object_or_404(Client, id=pk)
+    if request.method == "POST":
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            client = form.save(commit=False)
+            client.save()
+            return redirect('client_details', pk=client.id)
+    else:
+        form = ClientForm(instance=client)
+    return render(request, 'crm/client_edit.htm', {'form': form, 'client':client})
 
 def login_view(request):
     next_page = request.GET.get('next', '/')
