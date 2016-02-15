@@ -16,3 +16,13 @@ def client_list(request, pk=0):
 												   'cities':cities,
 												   'city_now':pk,
 												  })
+
+
+def client_details(request, pk):
+	pk = int(pk)
+	client = get_object_or_404(Client, id=pk)
+	contacts = Contact.objects.filter(clients=pk).order_by('date')
+	
+	return render(request, 'crm/client_details.htm', {'client': client,
+												      'contacts': contacts,
+													 })
