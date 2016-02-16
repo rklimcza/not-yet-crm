@@ -58,15 +58,14 @@ def client_edit(request, pk):
 
 def login_view(request):
     next_page = request.GET.get('next', '/')
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    
-    user = authenticate(username=username, password=password)
-    fail = False
-    if username is not None:
-        fail = True
-    if user is not None:
-        login(request, user)
-        return redirect(next_page)
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(next_page)
+        else:
+            return render(request, 'crm/login_view.htm', {'login_failed':True})
     else:
-        return render(request, 'crm/login_view.htm', {'login_failed':fail})
+        return render(request, 'crm/login_view.htm', {})
