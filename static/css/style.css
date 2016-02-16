@@ -8,3 +8,9 @@
 .list-group-item:first-child {
 	border-top-color:white;
 }
+
+.errorlist {
+ list-style-type: none;
+ float:right;
+ color: red;
+}
