@@ -31,8 +31,15 @@ def client_details(request, pk):
 													 })
                                                      
 @login_required
+def client_delete(request, pk):
+    pk = int(pk)
+    client = get_object_or_404(Client, id=pk)
+    client.delete()
+    return redirect('/')
+                                                     
+@login_required
 def client_new(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ClientForm(request.POST)
         if form.is_valid():
             client = form.save(commit=False)

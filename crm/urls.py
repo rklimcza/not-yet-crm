@@ -12,6 +12,9 @@ urlpatterns = [
     url(r'^client/(?P<pk>[0-9]+)/edit$',
 		views.client_edit, name='client_edit'),
         
+    url(r'^client/(?P<pk>[0-9]+)/delete$',
+		views.client_delete, name='client_delete'),
+        
     url(r'^client/new/$',
 		views.client_new, name='client_new'),
         
