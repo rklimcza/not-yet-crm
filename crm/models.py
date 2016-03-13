@@ -41,3 +41,24 @@ class Contact(models.Model):
 	
 	def __str__(self):
 		return str(self.id) + '. ' + str(self.date) + ' ' + self.way
+
+
+class Task(models.Model):
+    
+    actions = (
+    ('phone', 'telefon'),
+    ('email', 'e-mail'),
+	('meeting', 'spotkanie'),
+    ('class', 'szkolenie'),
+    ('other', 'inne'),
+	)
+    
+    date = models.DateField(default=date.today(), verbose_name='Data')
+    action = models.CharField(max_length=10, choices=actions,
+		  verbose_name='Typ', default='other')
+    comment = models.TextField(verbose_name='Komentarz')
+    done = models.BooleanField(default=False, verbose_name='Zrobione')
+    
+    def __str__(self):
+        return str(self.id) + '. ' + str(self.date) + ' ' + self.action
+    

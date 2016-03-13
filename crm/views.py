@@ -1,8 +1,26 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from crm.models import Client, City, Contact
+from crm.models import Client, City, Contact, Task
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import ClientForm, ContactForm
+from datetime import date, timedelta
+import datetime
+
+
+def login_view(request):
+    next_page = request.GET.get('next', '/')
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(next_page)
+        else:
+            return render(request, 'crm/login_view.htm', {'login_failed':True})
+    else:
+        return render(request, 'crm/login_view.htm', {})
+
 
 @login_required
 def client_list(request, pk=0):
@@ -18,6 +36,7 @@ def client_list(request, pk=0):
 	return render(request, 'crm/client_list.htm', {'clients': clients,
 												   'cities':cities,
 												   'city_now':pk,
+                                                   'current':1,
 												  })
 
 @login_required
@@ -28,6 +47,7 @@ def client_details(request, pk):
 	
 	return render(request, 'crm/client_details.htm', {'client': client,
 												      'contacts': contacts,
+                                                      'current':1,
 													 })
                                                      
 @login_required
@@ -47,8 +67,9 @@ def client_new(request):
             return redirect('client_details', pk=client.id)
     else:
         form = ClientForm()
-    return render(request, 'crm/client_new.htm', {'form': form})
-                                                     
+    return render(request, 'crm/client_new.htm', {'form': form,
+                                                  'current':1,
+                                                  })
                                                      
 @login_required
 def client_edit(request, pk):
@@ -61,7 +82,10 @@ def client_edit(request, pk):
             return redirect('client_details', pk=client.id)
     else:
         form = ClientForm(instance=client)
-    return render(request, 'crm/client_edit.htm', {'form': form, 'client':client})
+    return render(request, 'crm/client_edit.htm', {'form': form,
+                                                   'client':client,
+                                                   'current':1,
+                                                   })
 
 @login_required
 def contact_new(request, pk):
@@ -75,18 +99,25 @@ def contact_new(request, pk):
             return redirect('client_details', pk=pk)
     else:
         form = ContactForm()
-    return render(request, 'crm/contact_new.htm', {'form': form, 'client':client})
+    return render(request, 'crm/contact_new.htm', {'form': form,
+                                                   'client':client,
+                                                   'current':1,
+                                                   })
 
-def login_view(request):
-    next_page = request.GET.get('next', '/')
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect(next_page)
-        else:
-            return render(request, 'crm/login_view.htm', {'login_failed':True})
-    else:
-        return render(request, 'crm/login_view.htm', {})
+
+
+@login_required
+def task_list(request, range=0):
+    end = date.today()
+    if range == 'day':
+        pass
+    elif range == 'week':
+        end += datetime.timedelta(weeks=1)
+    elif range == 'month':
+        end += datetime.timedelta(days=31)
+    elif range == 'year':
+        end += datetime.timedelta(days=365)
+    tasks = Task.objects.filter(date__range=(date.today(), end), done=False).order_by('date')
+    return render(request, 'crm/task_list.htm', {'current':2,
+                                                 'tasks':tasks,
+                                                 'active_range':range,})

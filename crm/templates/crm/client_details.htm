@@ -32,7 +32,7 @@
                     {% elif contact.way == 'class' %}
                         <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
                     {% endif %}
-                        <strong>{{ contact.date }}</strong> {{ contact.comment }}
+                        <strong>{{ contact.date|date:'l, d.m.Y' }}</strong> {{ contact.comment }}
                 </td>
               </tr>
               {% endfor %}

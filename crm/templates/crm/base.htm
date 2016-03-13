@@ -25,7 +25,8 @@
         <div class="row" style="padding-bottom:15px">
           <div class="col-md-12">
             <ul class="nav nav-tabs">
-              <li role="presentation" class="active"><a href="/">Klienci</a></li>
+              <li role="presentation" class="{% if current == 1 %}active {% endif %}"><a href="{% url 'client_list' %}">Klienci</a></li>
+              <li role="presentation" class="{% if current == 2 %}active {% endif %}"><a href="{% url 'task_list' range='day' %}">Zadania</a></li>
             </ul>
           </div>
         </div>

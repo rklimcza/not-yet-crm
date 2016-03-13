@@ -25,4 +25,10 @@ urlpatterns = [
                       {'next_page': '/'}),
                       
     url(r'^login/$', views.login_view, name='login_view'),
+    
+    
+    url(r'^task/$', views.task_list, name='task_list'),
+    
+    url(r'^task/(?P<range>[a-z]+)$',
+		views.task_list, name='task_list'),
 ]
